@@ -1,0 +1,22 @@
+ div{
+  text-align: center;
+  vertical-align: center;
+  line-height: 10vh;
+   flex-direction:column;
+/*    margin-left:20px; */
+   display:block;
+  
+}
+
+.textArea{
+width:300px;
+  height:300px;
+  
+}
+
+.result{
+
+  border: 5px solid blue;
+
+  
+}
