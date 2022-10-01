@@ -1,7 +1,7 @@
 import './App.css'
 import "@tensorflow/tfjs";
 import * as qna from '@tensorflow-models/qna'
-// import 'papercss'
+import 'papercss'
 
 import React, { useState, useEffect } from 'react'
 
@@ -10,15 +10,15 @@ export default function App() {
   const [greet, setGreet] = useState("")
   const [search, setSearch] = useState("")
   const [passages, setPassages] = useState("")
-  const[getPassages,setGetPassages]=useState("")
-  const[bgColor,setBgColor]=useState({color:"red"})
+  const [getPassages, setGetPassages] = useState("")
+  const [bgColor, setBgColor] = useState({ color: "red" })
 
-const chngColor=()=>{
+  const chngColor = () => {
 
-Uhr>12?setBgColor({color:"blue"}):setBgColor(bgColor)
+    Uhr > 12 ? setBgColor({ color: "blue" }) : setBgColor(bgColor)
 
-  
-}
+
+  }
 
   // Load the model.
   const loadModel = async (evt) => {
@@ -29,24 +29,28 @@ Uhr>12?setBgColor({color:"blue"}):setBgColor(bgColor)
 
     if (evt.key === "Enter") {
       setGetPassages("loading pls wait.....")
+      const resultStyle = document.querySelector('.result')
+      resultStyle.scrollIntoView()
 
-      const passage=passages
+      const passage = passages
       const question = search
       const model = await qna.load();
       const answers = await model.findAnswers(question, passage);
-{search.includes("?")?search:alert("pls add ?")}
-       console.log('Answers: ');
+      { search.includes("?") ? search : alert("pls add ?") }
+      console.log('Answers: ');
       console.log(answers);
-      const randInt=Math.floor(Math.random() * 3)
-     setGetPassages(JSON.stringify(answers[randInt]===undefined?"not existing": answers[randInt].text))
+      const randInt = Math.floor(Math.random() * 3)
+      setGetPassages(JSON.stringify(answers[randInt] === undefined ? "not existing" : answers[randInt].text))
 
-       
+
+
+
     }
 
   }
 
 
-    const Uhr = new Date().getHours()
+  const Uhr = new Date().getHours()
 
   const uhrZeit = () => {
 
@@ -55,11 +59,11 @@ Uhr>12?setBgColor({color:"blue"}):setBgColor(bgColor)
   }
 
   useEffect(() => {
-{search.length=== 0 ? setGetPassages("pls ask Something...") : null}
+    { search.length === 0 ? setGetPassages("pls ask Something...") : null }
     uhrZeit()
     chngColor()
   }, [])
- 
+
   return (
     <div style={bgColor} className="col flex-center">
       <h1 className="sm-3 col d-flex align-middle">{greet}</h1>
@@ -68,10 +72,10 @@ Uhr>12?setBgColor({color:"blue"}):setBgColor(bgColor)
         (e) => {
           setSearch(e.target.value)
           console.log(e.target.value)
-          
-          e.target.value.length===0?setGetPassages(""):null
-          
-         
+
+          e.target.value.length === 0 ? setGetPassages("") : null
+
+
 
 
         }}
@@ -84,16 +88,16 @@ Uhr>12?setBgColor({color:"blue"}):setBgColor(bgColor)
 
       />
       <div>
-      <textarea className="textArea" value={passages} onChange={(e)=>{
-        console.log(e.target.value)
-      setPassages(e.target.value)
-      
-      }} placeholder="paste the Text....."/>
-        </div>
+        <textarea className="textArea" value={passages} onChange={(e) => {
+          console.log(e.target.value)
+          setPassages(e.target.value)
+
+        }} placeholder="paste the Text....." />
+      </div>
 
       <div>
-      <h3 className="result">{getPassages}</h3>
-        </div>
+        <h3 className="result">{getPassages}</h3>
+      </div>
     </div>
   )
 }
