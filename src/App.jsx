@@ -12,6 +12,7 @@ export default function App() {
   const [passages, setPassages] = useState("")
   const [getPassages, setGetPassages] = useState("")
   const [bgColor, setBgColor] = useState({ color: "red" })
+  const [fokus, setfokus] = useState(false)
 
   const chngColor = () => {
 
@@ -28,9 +29,12 @@ export default function App() {
     // Finding the answers
 
     if (evt.key === "Enter") {
+      setfokus(true)
       setGetPassages("loading pls wait.....")
       const resultStyle = document.querySelector('.result')
       resultStyle.scrollIntoView()
+      resultStyle.focus({ focusVisible: true })
+
 
       const passage = passages
       const question = search
@@ -41,6 +45,10 @@ export default function App() {
       console.log(answers);
       const randInt = Math.floor(Math.random() * 3)
       setGetPassages(JSON.stringify(answers[randInt] === undefined ? "not existing" : answers[randInt].text))
+
+      setTimeout(() => {
+        setfokus("")
+      }, 3000)
 
 
 
@@ -96,7 +104,8 @@ export default function App() {
       </div>
 
       <div>
-        <h3 className="result">{getPassages}</h3>
+        {fokus ? " 👇" : null}
+        <h3 className="result" onBlur={fokus}>{getPassages}</h3>
       </div>
     </div>
   )
